@@ -1,16 +1,16 @@
 /**
  * Internal resolved configuration used throughout the codebase.
  *
- * Prefer editing `astro-paper.config.ts` instead of this file. This module exists to
- * apply defaults and expose a fully-resolved config shape (`ResolvedAstroPaperConfig`).
+ * Prefer editing `site.config.ts` instead of this file. This module exists to
+ * apply defaults and expose a fully-resolved config shape (`ResolvedBlogConfig`).
  */
-import userConfig from "@/astro-paper.config";
-import type { ResolvedAstroPaperConfig } from "./types/config";
+import userConfig from "@/site.config";
+import type { ResolvedBlogConfig } from "./types/config";
 import { PUBLIC_GOOGLE_SITE_VERIFICATION } from "astro:env/client";
 
 const DEFAULT_OG_IMAGE = "default-og.jpg";
 
-const config: ResolvedAstroPaperConfig = {
+const config: ResolvedBlogConfig = {
   site: {
     ...userConfig.site,
     ogImage: userConfig.site.ogImage ?? DEFAULT_OG_IMAGE,
@@ -28,7 +28,6 @@ const config: ResolvedAstroPaperConfig = {
   },
   features: {
     lightAndDarkMode: userConfig.features?.lightAndDarkMode ?? true,
-    dynamicOgImage: userConfig.features?.dynamicOgImage ?? true,
     showArchives: userConfig.features?.showArchives ?? true,
     showBackButton: userConfig.features?.showBackButton ?? true,
     editPost: userConfig.features?.editPost ?? { enabled: false },

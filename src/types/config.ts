@@ -36,12 +36,6 @@ interface PostsConfig {
 interface FeaturesConfig {
   /** Enable light/dark mode toggle. Defaults to true. */
   lightAndDarkMode?: boolean;
-  /**
-   * Generate dynamic OG images per post and provide `/og.png` when the static
-   * `public/{site.ogImage}` file is absent. When false, that file is required
-   * for the default layout OG image (build fails if missing).
-   */
-  dynamicOgImage?: boolean;
   /** Show the /archives page and link it in nav. Defaults to true. */
   showArchives?: boolean;
   /** Show back button on post detail pages. Defaults to true. */
@@ -92,7 +86,7 @@ interface ShareLink {
   linkTitle?: string;
 }
 
-interface AstroPaperConfig {
+interface BlogConfig {
   site: SiteConfig;
   posts?: PostsConfig;
   features?: FeaturesConfig;
@@ -117,7 +111,7 @@ type ResolvedSiteConfig = Required<
 > &
   Pick<SiteConfig, "profile" | "googleVerification">;
 
-export interface ResolvedAstroPaperConfig {
+export interface ResolvedBlogConfig {
   site: ResolvedSiteConfig;
   posts: Required<PostsConfig>;
   features: Required<FeaturesConfig>;
@@ -126,11 +120,9 @@ export interface ResolvedAstroPaperConfig {
 }
 
 /**
- * Type helper for astro-paper.config.ts.
+ * Type helper for site.config.ts.
  * Provides full IntelliSense without any runtime overhead.
  */
-export function defineAstroPaperConfig(
-  config: AstroPaperConfig
-): AstroPaperConfig {
+export function defineBlogConfig(config: BlogConfig): BlogConfig {
   return config;
 }
