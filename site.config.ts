@@ -2,7 +2,7 @@ import { defineBlogConfig } from "./src/types/config";
 
 export default defineBlogConfig({
   site: {
-    url: "https://example.com/",
+    url: "https://ZhL1ii.github.io",
     title: "ZhL1ii",
     description: "Notes, essays, and project updates.",
     author: "Your Name",
