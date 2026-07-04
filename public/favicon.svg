@@ -1,5 +1,11 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="100%" viewBox="0 0 1254 1254" enable-background="new 0 0 1254 1254" xml:space="preserve">
+<defs>
+	<clipPath id="favicon-rounded-corners">
+		<rect width="1254" height="1254" rx="220" ry="220"/>
+	</clipPath>
+</defs>
+<g clip-path="url(#favicon-rounded-corners)">
 <path fill="#FDFDFD" opacity="1.000000" stroke="none"
 	d="
 M570.000000,1255.000000
@@ -123,4 +129,5 @@ M774.748901,594.744507
 	C785.093811,514.080139 785.043701,541.889465 784.980835,569.698608
 	C784.959167,579.262512 781.648071,587.565491 774.748901,594.744507
 z"/>
+</g>
 </svg>
