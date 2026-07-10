@@ -13,6 +13,11 @@ import { useTranslations } from "@/i18n";
 import config from "@/config";
 
 const { site, features } = config;
+const siteTitleAccent = "Blog";
+const siteTitleBase = site.title.endsWith(siteTitleAccent)
+  ? site.title.slice(0, -siteTitleAccent.length)
+  : site.title;
+const hasAccentSiteTitle = site.title.endsWith(siteTitleAccent);
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
@@ -52,7 +57,9 @@ const isActive = (path: string) => {
       href={getRelativeLocaleUrl(locale, "")}
       class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
     >
-      {site.title}
+      {siteTitleBase}{
+        hasAccentSiteTitle && <span class="text-accent">{siteTitleAccent}</span>
+      }
     </a>
     <nav
       id="nav-menu"

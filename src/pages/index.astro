@@ -13,7 +13,12 @@ import { getSortedPosts } from "@/utils/getSortedPosts";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
 
-const { socials, posts: postsConfig } = config;
+const { site, socials, posts: postsConfig } = config;
+const siteTitleAccent = "Blog";
+const siteTitleBase = site.title.endsWith(siteTitleAccent)
+  ? site.title.slice(0, -siteTitleAccent.length)
+  : site.title;
+const hasAccentSiteTitle = site.title.endsWith(siteTitleAccent);
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
@@ -35,7 +40,11 @@ const homePath = getRelativeLocaleUrl(locale, "");
   >
     <section id="hero" class="border-border border-b pt-8 pb-6">
       <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        MyBlog
+        {siteTitleBase}{
+          hasAccentSiteTitle && (
+            <span class="text-accent">{siteTitleAccent}</span>
+          )
+        }
       </h1>
       <a
         target="_blank"
@@ -52,9 +61,7 @@ const homePath = getRelativeLocaleUrl(locale, "");
         <span class="sr-only">RSS Feed</span>
       </a>
 
-      <p>
-        A personal space for notes, essays, and project updates.
-      </p>
+      <p>A personal space for notes, essays, and project updates.</p>
       <p class="mt-2">
         Start with the latest posts, or browse
         <LinkButton
