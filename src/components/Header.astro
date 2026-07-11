@@ -13,11 +13,11 @@ import { useTranslations } from "@/i18n";
 import config from "@/config";
 
 const { site, features } = config;
-const siteTitleAccent = "Blog";
-const siteTitleBase = site.title.endsWith(siteTitleAccent)
-  ? site.title.slice(0, -siteTitleAccent.length)
+const siteTitleSuffix = "'s Blog";
+const hasStyledSiteTitle = site.title.endsWith(siteTitleSuffix);
+const siteTitleName = hasStyledSiteTitle
+  ? site.title.slice(0, -siteTitleSuffix.length)
   : site.title;
-const hasAccentSiteTitle = site.title.endsWith(siteTitleAccent);
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
@@ -48,17 +48,29 @@ const isActive = (path: string) => {
 </a>
 
 <header
-  class="app-layout flex flex-col items-center justify-between sm:flex-row"
+  class="mx-auto flex w-full max-w-[1050px] flex-col items-center justify-between px-4 sm:flex-row"
 >
   <div
     class="border-border bg-background relative flex w-full items-baseline justify-between border-b py-4 sm:items-center sm:py-6"
   >
     <a
       href={getRelativeLocaleUrl(locale, "")}
-      class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
+      class="absolute inline-flex items-center gap-2 py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
     >
-      {siteTitleBase}{
-        hasAccentSiteTitle && <span class="text-accent">{siteTitleAccent}</span>
+      {
+        hasStyledSiteTitle ? (
+          <>
+            <span>
+              {siteTitleName}
+              <span class="text-accent">'s</span>
+            </span>
+            <span class="inline-block rotate-6 bg-[#1f2a33] px-2 py-1 text-base leading-none font-medium text-white shadow-sm transition-transform duration-200 hover:rotate-3 sm:text-lg">
+              Blog
+            </span>
+          </>
+        ) : (
+          site.title
+        )
       }
     </a>
     <nav
