@@ -5,7 +5,7 @@ export default defineBlogConfig({
     url: "https://ZhL1ii.github.io",
     title: "ZhL1ii's Blog",
     description: "Notes, essays, and project updates.",
-    author: "Your Name",
+    author: "ZhL1ii",
     ogImage: "default-og.jpg",
     lang: "en",
     timezone: "Asia/Shanghai",

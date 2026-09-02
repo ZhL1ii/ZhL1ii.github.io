@@ -1,10 +1,22 @@
 ---
 title: SSH 隧道与端口转发
-pubDatetime: 2026-08-25T22:55:00Z
+pubDatetime: 2026-09-02T00:00:00+08:00
 description: 在远程开发中常用的 SSH 隧道与端口转发。
+tags:
+  - Tools
+  - Linux
 ---
 
-# SSH 隧道与端口转发
+SSH 隧道可以把本机端口通过 SSH 连接转发到远程服务器或远程网络中的服务。
+
+最常用的本地端口转发命令是：
+
+```bash
+ssh -N -L 8080:127.0.0.1:8080 user@ubuntu
+```
+
+执行后，在本机访问 `http://localhost:8080`，实际上访问的是 Ubuntu 上的
+`127.0.0.1:8080`。
 
 ## 1. SSH
 
@@ -123,7 +135,7 @@ Ubuntu
 └── 8080             目标端口
 ```
 
-注意：这里的 `127.0.0.1`指的是 `SSH` 连接的目标的地址，它是站在 **SSH 服务器一侧** 来理解的。
+注意：这里的 `127.0.0.1` 是 SSH 服务器一侧看到的目标地址。
 
 例如 SSH 登录的是 Ubuntu：
 
@@ -131,7 +143,7 @@ Ubuntu
 ssh -L 8080:127.0.0.1:8080 user@ubuntu
 ```
 
-这里的：127.0.0.1:8080 实际上是 Ubuntu 上的 127.0.0.1:8080
+这里的 `127.0.0.1:8080` 实际上是 Ubuntu 上的 `127.0.0.1:8080`。
 
 ------
 
@@ -306,13 +318,13 @@ Host dev
     LocalForward 9090 127.0.0.1:9090
 ```
 
-以后在执行 ssh 连接 ubuntu 时，就可以自动创建这些 Local Forwad 隧道了。
+以后执行 `ssh dev` 时，就可以自动创建这些 Local Forward 隧道了。
 
 ------
 
-## 10. SSH 隧道传输的是 TCP
+## 10. SSH 本地端口转发传输的是 TCP
 
-SSH Local Forward 本质上做的是：
+SSH Local Forward 本质上是在两个 TCP 连接之间转发数据：
 
 ```text
 TCP connection
@@ -361,13 +373,13 @@ Mac localhost:18080
 Ubuntu localhost:8080
 ```
 
-访问：` http://localhost:18080 ` 即可。
+访问：`http://localhost:18080` 即可。
 
 ------
 
 ## 12. Local / Remote / Dynamic Forward
 
-SSH 主要有三种转发。
+SSH 常见的端口转发主要有三种。
 
 - -L    Local Forward
 - -R    Remote Forward
@@ -390,7 +402,7 @@ Mac → Ubuntu 上的 MySQL
 
 ### `-R` 远程转发
 
-方向与 -L 想反，让远程机器可以访问本地的服务。
+方向与 `-L` 相反：由远程服务器监听端口，让远程服务器可以访问本地的服务。
 
 大致：
 
@@ -410,15 +422,30 @@ SSH Tunnel
 你 Mac 上运行的 3000
 ```
 
+对应的命令是：
+
+```bash
+ssh -N \
+  -R 9000:127.0.0.1:3000 \
+  user@server
+```
+
+建立连接后，服务器上的 `localhost:9000` 会通过 SSH 隧道访问 Mac 上的
+`localhost:3000`。
+
+远程监听端口默认通常只绑定在服务器的 loopback 地址上。如果希望其他机器也能访问，
+还需要配置 `GatewayPorts` 和防火墙规则，因此不要随意绑定到 `0.0.0.0`。
+
 以后遇到 webhook、本地服务临时暴露等场景可能会接触。
 
 ### `-D` 动态转发
 
-建立 SOCKS 代理：
+建立一个 SOCKS 代理，由客户端动态决定目标地址和端口：
 
 ```bash
-ssh -D 1080 user@server
+ssh -N -D 1080 user@server
 ```
 
-SSH 不再固定转发某一个：`host:port` ，而由 SOCKS 客户端动态决定目的地。
+然后将浏览器或其他客户端的 SOCKS 代理设置为 `localhost:1080`。
 
+SSH 不再固定转发某一个 `host:port`，而是由 SOCKS 客户端动态决定目的地。
