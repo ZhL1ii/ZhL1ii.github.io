@@ -4,7 +4,7 @@ pubDatetime: 2026-09-09T00:00:00+08:00
 description: "以两道简单的 LeetCode 题认识闭包。"
 tags:
   - Go
-  - Grammar
+  - Syntax
   - LeetCode
 ---
 

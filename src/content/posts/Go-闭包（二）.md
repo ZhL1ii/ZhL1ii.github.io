@@ -4,7 +4,7 @@ pubDatetime: 2026-09-11T00:00:00+08:00
 description: "理解 Go 闭包的变量捕获、生命周期、常见用法以及并发场景中的注意事项。"
 tags:
   - Go
-  - Grammar
+  - Syntax
 ---
 
 ## 一、闭包捕获变量的方式
